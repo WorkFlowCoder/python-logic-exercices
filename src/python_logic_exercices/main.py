@@ -1,8 +1,10 @@
 from python_logic_exercices.string_logic import StringLogic
 from python_logic_exercices.object_logic import ObjectLogic
+from python_logic_exercices.array_object_logic import ArrayObjectLogic
 
 string_logic = StringLogic()
 object_logic = ObjectLogic()
+array_object_logic = ArrayObjectLogic()
 
 
 def string_logic_test():
@@ -137,6 +139,48 @@ def object_logic_test_part_3():
     monthly_revenues = {"january": 1000, "february": 1200, "march": 900, "april": 1500}
     print(f"Résumé des revenus sous forme de statistiques: {object_logic.get_object_stats(monthly_revenues)}")
 
+def array_logic():
+	users = [
+    {"id": 1, "name": "Alice", "age": 25, "active": True},
+    {"id": 2, "name": "Bob", "age": 30, "active": False},
+    {"id": 3, "name": "Charlie", "age": 35, "active": True}
+	]
+	print(f"Filtrage des utilisateurs actifs: {array_object_logic.filter_by_property(users, 'active', True)}")
+
+	products = [
+    {"id": 1, "name": "Laptop", "category": "Electronics", "price": 999},
+    {"id": 2, "name": "Smartphone", "category": "Electronics", "price": 699},
+    {"id": 3, "name": "T-shirt", "category": "Clothing", "price": 29}
+	]
+	print(f"Regroupement des produits par catégorie: {array_object_logic.group_by(products, 'category')}")
+
+	library1 = [
+    {"id": 1, "title": "1984", "author": "Orwell", "available": True},
+    {"id": 2, "title": "Dune", "author": "Herbert", "available": False}
+	]
+	library2 = [
+    {"id": 3, "title": "1984", "author": "Orwell", "available": True},
+    {"id": 4, "title": "Foundation", "author": "Asimov", "available": True}
+	]
+	print(f"Intersection des deux bibliothèques par titre: {array_object_logic.find_intersection(library1, library2, 'title')}")
+
+	employees = [
+    {"id": 1, "firstName": "John", "lastName": "Doe", "salary": 50000},
+    {"id": 2, "firstName": "Jane", "lastName": "Smith", "salary": 60000}
+	]
+	transformer = lambda emp: {
+		"id": emp["id"],
+		"fullName": f"{emp['firstName']} {emp['lastName']}",
+		"annualSalary": emp["salary"] * 12
+	}
+	print(f"Transformation des employés avec un transformer personnalisé: {array_object_logic.transform_array(employees, transformer)}")
+	transactions = [
+		{"id": 1, "type": "debit", "amount": 100, "category": "Food"},
+		{"id": 2, "type": "debit", "amount": 50, "category": "Food"},
+		{"id": 3, "type": "credit", "amount": 75, "category": "Income"}
+	]
+	print(f"Agrégation des montants par catégorie: {array_object_logic.aggregate_data(transactions, 'category', 'amount')}")
+
 
 def main():
 	print(" -- Tests sur les chaînes de caractères -- ")
@@ -145,7 +189,8 @@ def main():
     #object_logic_test_part_1()
     #object_logic_test_part_2()
 	#object_logic_test_part_3()
-	pass
+	#print(" -- Tests sur les listes d'objets -- ")
+	#array_logic()
 
 if __name__ == "__main__":
     main()

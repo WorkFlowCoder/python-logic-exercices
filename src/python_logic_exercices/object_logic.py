@@ -9,11 +9,11 @@ class ObjectLogic:
         "float": float
     }
 
-    def get_values(self, object : dict) -> list:
-        return list(object.values())
+    def get_values(self, obj : dict) -> list:
+        return list(obj.values())
     
-    def transform_values(self, object : dict, value : int) -> dict:
-        return {key: val * value for key, val in object.items()}
+    def transform_values(self, obj : dict, value : int) -> dict:
+        return {key: val * value for key, val in obj.items()}
     
     def merge_objects(self, object1 : dict, object2 : dict) -> dict:
         res = object1.copy()
@@ -24,16 +24,16 @@ class ObjectLogic:
                 res[key] = value
         return res
     
-    def filter_object(self, object : dict, value : int) -> dict:
+    def filter_object(self, obj : dict, value : int) -> dict:
         res = {}
-        for key, val in object.items():
+        for key, val in obj.items():
             if val <= value:
                 res[key] = val
         return res
     
-    def flat_to_nested(self, object : dict) -> dict:
+    def flat_to_nested(self, obj : dict) -> dict:
         res = {}
-        for key, value in object.items():
+        for key, value in obj.items():
             keys = key.split('.')
             current = res
             for k in keys[:-1]:
@@ -43,9 +43,9 @@ class ObjectLogic:
             current[keys[-1]] = value
         return res
     
-    def find_keys_by_value(self, object : dict, value : int) -> list:
+    def find_keys_by_value(self, obj : dict, value : int) -> list:
         list_of_keys = []
-        for key, val in object.items():
+        for key, val in obj.items():
             if val == value:
                 list_of_keys.append(key)
         return list_of_keys
@@ -58,30 +58,30 @@ class ObjectLogic:
             result[list_a[i]] = list_b[i]
         return result
     
-    def count_values(self, object : dict) -> dict:
+    def count_values(self, obj : dict) -> dict:
         result = {}
-        for key, val in object.items():
+        for key, val in obj.items():
             if val in result:
                 result[val] += 1
             else:
                 result[val] = 1
         return result
     
-    def extract_properties(self, object : dict, properties : list) -> dict:
+    def extract_properties(self, obj : dict, properties : list) -> dict:
         result = {}
         for prop in properties:
-            if prop in object:
-                result[prop] = object[prop]
+            if prop in obj:
+                result[prop] = obj[prop]
         return result
     
-    def sort_object_by_value(self, object: dict) -> dict:
-        return dict(sorted(object.items(), key=lambda item: item[1]))
+    def sort_object_by_value(self, obj: dict) -> dict:
+        return dict(sorted(obj.items(), key=lambda item: item[1]))
     
-    def find_max_value(self, object: dict) -> dict:
-        if not object:
+    def find_max_value(self, obj: dict) -> dict:
+        if not obj:
             return None
         values = []
-        for key, value in object.items():
+        for key, value in obj.items():
             values.append(value)
         return max(values)
     
@@ -91,8 +91,8 @@ class ObjectLogic:
                 result[obj[0]] = obj[1]
         return result
     
-    def find_value_in_object(self, object: dict, value) -> bool:
-        for key, val in object.items():
+    def find_value_in_object(self, obj: dict, value) -> bool:
+        for key, val in obj.items():
             if val == value:
                 return True
             if isinstance(val, dict):
@@ -110,9 +110,9 @@ class ObjectLogic:
                 result[key].append(obj)
         return result
     
-    def validate_object(self, schema: dict, object: dict) -> bool:
+    def validate_object(self, schema: dict, obj: dict) -> bool:
         for key, val in schema.items():
-            if key not in object or not isinstance(object[key], self.type_mapping[val]):
+            if key not in obj or not isinstance(obj[key], self.type_mapping[val]):
                 return False
         return True
     
@@ -128,9 +128,9 @@ class ObjectLogic:
                 result[key] = {"type": "added", "new": object_2[key]}
         return result
     
-    def object_to_url_params(self, object: dict) -> str:
+    def object_to_url_params(self, obj: dict) -> str:
         params = []
-        for key, value in object.items():
+        for key, value in obj.items():
             val = value
             if isinstance(val, str) and " " in val:
                 val = val.replace(" ", "%20")
@@ -153,18 +153,18 @@ class ObjectLogic:
         variance = self.calculate_variance(values)
         return variance ** 0.5
 
-    def get_object_stats(self, object: dict) -> dict:
+    def get_object_stats(self, obj: dict) -> dict:
         stats = {
             "basic": {
-                "min": min(object.values()) if object else None,
-                "max": max(object.values()) if object else None,
-                "average": int(sum(object.values()) / len(object)) if object else None,
-                "total": sum(object.values()) if object else None
+                "min": min(obj.values()) if obj else None,
+                "max": max(obj.values()) if obj else None,
+                "average": int(sum(obj.values()) / len(obj)) if obj else None,
+                "total": sum(obj.values()) if obj else None
             },
             "advanced": {
-                "median": int(self.calculate_median(object.values())) if object else None,
-                "variance": int(self.calculate_variance(object.values())) if object else None,
-                "standardDeviation": round(self.calculate_standard_deviation(object.values()),2) if object else None
+                "median": int(self.calculate_median(obj.values())) if obj else None,
+                "variance": int(self.calculate_variance(obj.values())) if obj else None,
+                "standardDeviation": round(self.calculate_standard_deviation(obj.values()),2) if obj else None
             }
         }
         return stats
